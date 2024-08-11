@@ -1,5 +1,8 @@
 <template>
-  <form class="flex flex-col gap-y-4" @subit.prevent="addTimer">
+  <form
+    class="flex flex-col gap-y-4"
+    @submit.prevent="$emit('addTimer', label, convertTimeComponentsToSeconds())"
+  >
     <h2 class="text-lg">Add Custom Timer:</h2>
     <div>
       <label
@@ -12,6 +15,7 @@
         id="default-input"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         required
+        v-model="label"
       />
     </div>
 
@@ -52,9 +56,14 @@
 import TimeComponentInput from '@/components/TimeComponentInput.vue'
 import { ref } from 'vue'
 
+defineEmits<{ addTimer: [label: string, secondsLeft: number] }>()
+
+const label = ref('')
 const hours = ref(0)
 const minutes = ref(0)
 const seconds = ref(0)
 
-function addTimer() {}
+function convertTimeComponentsToSeconds() {
+  return seconds.value + minutes.value * 60 + hours.value * 60 * 60
+}
 </script>
