@@ -1,11 +1,14 @@
 <template>
   <h1 class="text-3xl font-bold text-center my-8">
-    Countdown Timers
+    App
   </h1>
-  <TimerForm />
+  <div class="max-w-xl mx-auto">
+    <TimerDashboard />
+  </div>
+
 </template>
 
 <script setup lang="ts">
-import TimerForm from '@/components/TimerForm.vue'
+import TimerDashboard from '@/components/TimerDashboard.vue'
 </script>
 
