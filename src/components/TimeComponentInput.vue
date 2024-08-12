@@ -20,6 +20,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-defineProps(['label'])
+defineProps<{ label: string }>()
 const componentValue = defineModel()
 </script>

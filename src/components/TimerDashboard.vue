@@ -8,10 +8,13 @@
 import TimerForm from '@/components/TimerForm.vue'
 import TimerList from '@/components/TimerList.vue'
 import { ref } from 'vue'
+import type { Timer } from '@/types.js'
 
-const timers = ref<{ label: string; secondsLeft: number }[]>([])
+const timers = ref<Timer[]>([])
 
+let currentId = 1
 function addTimer(label: string, secondsLeft: number) {
-  timers.value.push({ label, secondsLeft })
+  timers.value.push({ id: currentId, label, secondsLeft })
+  currentId++
 }
 </script>
