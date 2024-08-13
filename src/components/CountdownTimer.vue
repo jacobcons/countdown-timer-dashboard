@@ -7,13 +7,8 @@
       {{ timer.label }}
     </h5>
     <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">{{ timer.secondsLeft }}</p>
-    <button
-      type="button"
-      class="mb-2 me-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-      @click="startTimer(timer.id)"
-    >
-      Start
-    </button>
+    <TimerControl :func="startTimer" :timerId="timer.id" text="Start" />
+    <TimerControl :func="stopTimer" :timerId="timer.id" text="Stop" />
   </div>
 </template>
 
@@ -21,6 +16,7 @@
 import type { Timer } from '@/types.js'
 import { useTimersStore } from '@/store.js'
 import { storeToRefs } from 'pinia'
+import TimerControl from '@/components/TimerControl.vue'
 
 defineProps<{ timer: Timer }>()
 
@@ -37,11 +33,18 @@ function startTimer(id: number) {
   }
 
   timer.started = true
-  const intervalId = setInterval(() => {
+  timer.intervalId = setInterval(() => {
     timer.secondsLeft -= 1
     if (timer.secondsLeft === 0) {
-      clearInterval(intervalId)
+      clearInterval(timer.intervalId as number)
     }
   }, 1000)
+}
+
+function stopTimer(id: number) {
+  const timer = findTimer(id)
+
+  clearInterval(timer.intervalId as number)
+  timer.started = false
 }
 </script>

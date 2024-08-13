@@ -3,4 +3,5 @@ export type Timer = {
   label: string
   secondsLeft: number
   started: boolean
+  intervalId: number | null
 }

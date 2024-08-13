@@ -71,7 +71,8 @@ function addTimer() {
     id: currentId,
     label: label.value,
     secondsLeft: convertTimeComponentsToSeconds(),
-    started: false
+    started: false,
+    intervalId: null
   })
   currentId++
 }
