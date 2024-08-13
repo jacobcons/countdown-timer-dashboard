@@ -38,12 +38,12 @@ import { storeToRefs } from 'pinia'
 import TimerControl from '@/components/TimerControl.vue'
 import { computed } from 'vue'
 
-const props = defineProps<{ timer: Timer }>()
+const props = defineProps<{ id: number }>()
 let { timers } = storeToRefs(useTimersStore())
-const timer = timers.value.find((timer) => timer.id === props.timer.id) as Timer
+const timer = timers.value.find((timer) => timer.id === props.id) as Timer
 const formattedTimeLeft = computed(() => {
   // split seconds left into as many hours, minutes and then seconds as possible
-  const { secondsLeft } = props.timer
+  const { secondsLeft } = timer
   const SECONDS_IN_HOUR = 3600
   const hours = String(Math.floor(secondsLeft / SECONDS_IN_HOUR)).padStart(2, '0')
   const minutes = String(Math.floor((secondsLeft % SECONDS_IN_HOUR) / 60)).padStart(2, '0')
@@ -77,6 +77,6 @@ function resetTimer() {
 }
 
 function deleteTimer() {
-  timers.value = timers.value.filter((timer) => timer.id !== props.timer.id)
+  timers.value = timers.value.filter((timer) => timer.id !== props.id)
 }
 </script>
