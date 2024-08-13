@@ -10,7 +10,7 @@
     <button
       type="button"
       class="mb-2 me-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-      @click="$emit('startTimer', timer.id)"
+      @click="startTimer(timer.id)"
     >
       Start
     </button>
@@ -19,6 +19,29 @@
 
 <script setup lang="ts">
 import type { Timer } from '@/types.js'
+import { useTimersStore } from '@/store.js'
+import { storeToRefs } from 'pinia'
 
 defineProps<{ timer: Timer }>()
+
+const { timers } = storeToRefs(useTimersStore())
+function findTimer(id: number) {
+  return timers.value.find((timer) => timer.id === id) as Timer
+}
+
+function startTimer(id: number) {
+  const timer = findTimer(id)
+
+  if (timer.started) {
+    return
+  }
+
+  timer.started = true
+  const intervalId = setInterval(() => {
+    timer.secondsLeft -= 1
+    if (timer.secondsLeft === 0) {
+      clearInterval(intervalId)
+    }
+  }, 1000)
+}
 </script>
