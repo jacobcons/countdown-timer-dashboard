@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-y-2 items-center">
+  <div class="flex flex-col items-center gap-y-2">
     <template v-for="timer in timers" :key="timer.id">
-      <CountdownTimer :timer="timer" />
+      <CountdownTimer :timer="timer" @startTimer="$emit('startTimer', timer.id)" />
     </template>
   </div>
 </template>
