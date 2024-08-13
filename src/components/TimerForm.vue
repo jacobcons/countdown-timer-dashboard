@@ -67,10 +67,12 @@ function convertTimeComponentsToSeconds() {
 
 let currentId = 1
 function addTimer() {
+  const startingSeconds = convertTimeComponentsToSeconds()
   timers.value.push({
     id: currentId,
     label: label.value,
-    secondsLeft: convertTimeComponentsToSeconds(),
+    startingSeconds,
+    secondsLeft: startingSeconds,
     started: false,
     intervalId: null
   })

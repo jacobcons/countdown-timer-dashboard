@@ -9,6 +9,7 @@
     <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">{{ timer.secondsLeft }}</p>
     <TimerControl :func="startTimer" :timerId="timer.id" text="Start" />
     <TimerControl :func="stopTimer" :timerId="timer.id" text="Stop" />
+    <TimerControl :func="resetTimer" :timerId="timer.id" text="Reset" />
   </div>
 </template>
 
@@ -46,5 +47,13 @@ function stopTimer(id: number) {
 
   clearInterval(timer.intervalId as number)
   timer.started = false
+}
+
+function resetTimer(id: number) {
+  const timer = findTimer(id)
+
+  clearInterval(timer.intervalId as number)
+  timer.started = false
+  timer.secondsLeft = timer.startingSeconds
 }
 </script>
