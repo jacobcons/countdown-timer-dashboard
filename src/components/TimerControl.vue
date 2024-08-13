@@ -9,7 +9,7 @@
 </template>
 <script setup lang="ts">
 defineProps<{
-  func: (id: number) => void
+  func: () => void
   text: string
 }>()
 </script>
